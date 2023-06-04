@@ -1,0 +1,6 @@
+<ul class="list-group">
+	<li *ngFor="let element of dataSource" (click)="this.onItemSelected(element)" 
+		class="list-group-item hover-bold" [ngClass]="element == this.selectedItem? 'active' : '' ">
+	  {{ this.propertyToList? element[this.propertyToList] : element }}
+	</li>
+</ul>

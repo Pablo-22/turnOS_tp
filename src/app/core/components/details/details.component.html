@@ -1,0 +1,16 @@
+<div [ngStyle]="{width: this.imageStyle}" *ngIf="this.showPlaceholder; else placeholder" class="card" >
+	<img  *ngIf="this.imageSrc" [src]="imageSrc" class="card-img-top" alt="Card Image">
+	<div class="card-body">
+	  <h5 class="card-title">{{ this.title }}</h5>
+	  <p class="card-text" *ngFor="let key of this.keys; index as i">
+		<strong>{{ key }}:</strong> {{ this.values[i] }}
+	  </p>
+	</div>
+</div>
+
+
+<ng-template #placeholder>
+	<div [ngStyle]="{width: this.imageStyle}" class="card p-4">
+		No se han seleccionado datos para mostrar.
+	</div>
+</ng-template>
