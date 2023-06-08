@@ -23,6 +23,8 @@ import {AvatarModule} from 'primeng/avatar';
 import {AvatarGroupModule} from 'primeng/avatargroup';
 import {StepsModule} from 'primeng/steps';
 import {SelectButtonModule} from 'primeng/selectbutton';
+import { OverlayModule } from 'primeng/overlay';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   declarations: [],
@@ -50,6 +52,9 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 	AvatarGroupModule,
 	StepsModule,
 	SelectButtonModule,
+	OverlayModule,
+	OverlayPanelModule,
+	InputMaskModule,
   ]
 })
 export class PrimeNgModule { }

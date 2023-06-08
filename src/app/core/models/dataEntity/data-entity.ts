@@ -1,4 +1,6 @@
+import { Timestamp } from "@angular/fire/firestore"
+
 export class DataEntity {
 	id:string = ''
-	createdDate:Date = new Date()
+	createdDate:Timestamp = new Timestamp(0,0)
 }

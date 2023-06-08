@@ -13,6 +13,8 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { ItemsListComponent } from './components/items-list/items-list.component';
+import { PrimeNgModule } from './prime-ng.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     ListComponent,
     TableComponent,
     DetailsComponent,
+    ItemsListComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -30,6 +33,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     FormsModule,
     NgxPaginationModule,
     AngularFireStorageModule,
+    PrimeNgModule
   ],
   providers: [
   ],
@@ -40,6 +44,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     TimestampToStrDatePipe,
     FormsModule,
     NgxPaginationModule,
+    ItemsListComponent
   ]
 })
 export class CoreModule { }

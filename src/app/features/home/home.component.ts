@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 export class HomeComponent implements OnInit {
 
 	UserLogged:boolean = false;
-  currentUser:User|undefined
+  	currentUser:User|undefined
 
 	constructor(private _auth:AuthService) {
 		this._auth.currentUser$.subscribe(x => {

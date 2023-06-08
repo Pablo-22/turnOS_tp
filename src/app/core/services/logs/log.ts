@@ -1,3 +1,4 @@
+import { Timestamp } from "@angular/fire/firestore";
 import { DataEntity } from "../../models/dataEntity/data-entity";
 
 export class Log extends DataEntity {
@@ -7,7 +8,6 @@ export class Log extends DataEntity {
 
 	constructor(value:string, objectName:string, objectId:string, ){
 		super();
-		this.createdDate = new Date();
 		this.value = value;
 		this.objectName = objectName; 
 		this.objectId = objectId; 

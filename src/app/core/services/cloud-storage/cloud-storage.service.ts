@@ -18,7 +18,7 @@ export class CloudStorageService {
 
 		let timestamp = TimestampUtils.getTimestampByDate(new Date())
 
-		const filePath = 'img/' + file.name + '-' + timestamp.toMillis();
+		const filePath = 'profileImg/' + file.name + '-' + timestamp.toMillis();
 		const fileRef = this.storage.ref(filePath);
 		const task = this.storage.upload(filePath, file);
 

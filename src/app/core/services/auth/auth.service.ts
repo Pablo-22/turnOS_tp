@@ -39,14 +39,6 @@ export class AuthService {
   
       await this._usersService.getByField('email', email).then(user => {
         this.currentUserAccessSubject.next(user);
-        Swal.fire({
-          title: '¡Hola de nuevo!',
-          text: "Has podido ingresar correctamente",
-          icon: 'success',
-          confirmButtonText: 'Ok'
-        }).then(x => {
-          this._router.navigate(['/'])
-        })
       })
 
       return result;
@@ -77,30 +69,19 @@ export class AuthService {
 		}
 	}
 
-  async signUp(email: string, password: string){
+  async signUp(user:User){
     try{
-      let result:any = await this._auth.createUserWithEmailAndPassword(email, password);
+      let result:any = await this._auth.createUserWithEmailAndPassword(user.email, user.password);
   
-      let user:User = new User();
-      user.email = email;
       result = this._usersService.create(user);
 
       if (result) {
         await this._usersService.getByField('email', user.email).then(user => { 
           this.currentUserAccessSubject.next(user);
         })
-
-        await Swal.fire({
-          title: '¡Bienvenido!',
-          text: "Has podido ingresar correctamente",
-          icon: 'success',
-          confirmButtonText: 'Ok'
-        }).then(x => {
-          this._router.navigate(['/'])
-        })
       }
 
-      return this.currentUser$;
+      return user;
     }
     catch(error) {
       Swal.fire({
@@ -119,5 +100,9 @@ export class AuthService {
 
   authState(){
     return this._auth.authState
+  }
+
+  getAuthCurrentUser(){
+    return this._auth.currentUser
   }
 }
