@@ -45,7 +45,7 @@ export class CrudService {
     obj.id = newDocRef.id;
     setDoc(newDocRef, JSON.parse(JSON.stringify(obj)) );
 
-    return newDocRef;
+    return newDocRef.id;
   }
 
   update(collectionName:string, obj:DataEntity) {

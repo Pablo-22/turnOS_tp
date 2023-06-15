@@ -47,7 +47,7 @@ export class LoginComponent {
 		}
 
 		let result = await this._users.getByField('email', this.emailInputStr)
-		if (!result) {
+		if (!result[0]) {
 			this._loaderService.hide();
 			Swal.fire({
 				icon: 'error',
@@ -57,7 +57,7 @@ export class LoginComponent {
 			return;
 		}
 
-		let user = result;
+		let user = result[0];
 
 		if (['ADMIN', 'SPECIALIST'].includes(user.type) && !user.approvedProfile) {
 			this._loaderService.hide();

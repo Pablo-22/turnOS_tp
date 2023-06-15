@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserTypePipe } from './pipes/user-type.pipe';
 import { UsersManagerComponent } from './features/users-manager/users-manager.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MyProfileComponent } from './features/my-profile/my-profile.component';
+import { SpecialistAvailabilityComponent } from './features/appointments/specialist-availability/specialist-availability.component';
+import { DayPipe } from './pipes/day.pipe';
+import { TimePipe } from './pipes/time.pipe';
+import { RequestAppointmentComponent } from './features/appointments/request-appointment/request-appointment.component';
+
+import localeES from '@angular/common/locales/es'
+import { registerLocaleData } from '@angular/common';
+import { MyAppointmentsComponent } from './features/appointments/my-appointments/my-appointments.component'
+registerLocaleData(localeES, 'es')
 
 @NgModule({
   declarations: [
@@ -28,6 +38,12 @@ import { HttpClientModule } from '@angular/common/http';
     NewUserFormComponent,
     UserTypePipe,
     UsersManagerComponent,
+    MyProfileComponent,
+    SpecialistAvailabilityComponent,
+    DayPipe,
+    TimePipe,
+    RequestAppointmentComponent,
+    MyAppointmentsComponent,
   ],
   imports: [
     CoreModule,
@@ -39,7 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
 		ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: LOCALE_ID, useValue: 'es'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

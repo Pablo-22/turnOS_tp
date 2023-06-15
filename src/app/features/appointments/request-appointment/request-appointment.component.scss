@@ -1,0 +1,18 @@
+.avatar {
+	cursor: pointer;
+	vertical-align: middle;
+	width: 5.125rem;
+	height: 5.125rem;
+	border-radius: 8px;
+	object-fit: cover;
+	transition: width .2s, height .2s;
+}
+
+.avatar:hover {
+	width: 5rem;
+	height: 5rem;
+}
+
+.appointments-panel{
+	border-radius: 10px;
+}

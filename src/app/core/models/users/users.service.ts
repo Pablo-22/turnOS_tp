@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { CrudService } from '../../services/crud/crud.service';
 import { DocumentData } from '@angular/fire/firestore';
 import { User } from './user';
+import { Specialist } from 'src/app/features/login/models/specialist';
+import { Patient } from 'src/app/features/login/models/patient';
 
 @Injectable({
   providedIn: 'root'
@@ -22,15 +24,17 @@ export class UsersService {
   }
 
   async getByField(fieldName:string, value:any){
-    let user:User = new User()
-    await this._crud.getByField(this.collectionName, fieldName, value).then(userData => {
-      user = this.parse(userData)
+    let users:User[] = []
+    await this._crud.getByField(this.collectionName, fieldName, value).then(usersData => {
+      
+      usersData.forEach(userData => {
+        users.push(this.parse(userData))
+      });
     })
-    return user
+    return users
   }
 
   create(user:User){
-    console.log(this.cleanUser(user))
     return this._crud.create(this.collectionName, this.cleanUser(user));
   }
 
@@ -43,17 +47,48 @@ export class UsersService {
   }
 
   parse(data:DocumentData) : User {
+    if (data['type'] == 'SPECIALIST') {
+      
+      const specialist = new Specialist()
+      specialist.id = data['id']
+      specialist.email = data['email']
+      specialist.password = data['password']
+      specialist.name = data['name']
+      specialist.surname = data['surname']
+      specialist.birthDate = data['birthDate']
+      specialist.type = data['type']
+      specialist.approvedProfile = data['approvedProfile']
+      specialist.images = data['images']
+      specialist.speciality = data['speciality']
+      return specialist
+      
+    } else if(data['type'] == 'PATIENT') {
+      
+      const patient = new Patient()
+      patient.id = data['id']
+      patient.email = data['email']
+      patient.password = data['password']
+      patient.name = data['name']
+      patient.surname = data['surname']
+      patient.birthDate = data['birthDate']
+      patient.type = data['type']
+      patient.approvedProfile = data['approvedProfile']
+      patient.images = data['images'] 
+      patient.healthInsurance = data['healthInsurance']
+      return patient
+    }
+    
     const user = new User()
-    user.id = data[0]['id']
-    user.email = data[0]['email']
-    user.password = data[0]['password']
-    user.name = data[0]['name']
-    user.surname = data[0]['surname']
-    user.birthDate = data[0]['birthDate']
-    user.type = data[0]['type']
-    user.approvedProfile = data[0]['approvedProfile']
-    user.images = data[0]['images']
-    return user 
+    user.id = data['id']
+    user.email = data['email']
+    user.password = data['password']
+    user.name = data['name']
+    user.surname = data['surname']
+    user.birthDate = data['birthDate']
+    user.type = data['type']
+    user.approvedProfile = data['approvedProfile']
+    user.images = data['images']
+    return user
   }
 
   cleanUser(user:User){

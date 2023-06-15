@@ -25,7 +25,7 @@ export class AuthService {
     this._auth.authState.subscribe(x => {
       if (x?.email) {
         this._usersService.getByField('email', x.email?? '').then(user => {
-          this.currentUserAccessSubject.next(user);
+          this.currentUserAccessSubject.next(user[0]);
         });
       } else {
         this.currentUserAccessSubject.next(undefined);
@@ -38,7 +38,7 @@ export class AuthService {
       let result = await this._auth.signInWithEmailAndPassword(email, password);
   
       await this._usersService.getByField('email', email).then(user => {
-        this.currentUserAccessSubject.next(user);
+        this.currentUserAccessSubject.next(user[0]);
       })
 
       return result;
@@ -77,7 +77,7 @@ export class AuthService {
 
       if (result) {
         await this._usersService.getByField('email', user.email).then(user => { 
-          this.currentUserAccessSubject.next(user);
+          this.currentUserAccessSubject.next(user[0]);
         })
       }
 

@@ -25,6 +25,9 @@ import {StepsModule} from 'primeng/steps';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { OverlayModule } from 'primeng/overlay';
 import { InputMaskModule } from 'primeng/inputmask';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { ToastModule } from 'primeng/toast';
+
 
 @NgModule({
   declarations: [],
@@ -35,6 +38,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 	SidebarModule,
 	MenuModule,
 	TreeModule,
+	TabMenuModule,
 	InputTextModule,
 	TabViewModule,
 	CalendarModule,
@@ -55,6 +59,8 @@ import { InputMaskModule } from 'primeng/inputmask';
 	OverlayModule,
 	OverlayPanelModule,
 	InputMaskModule,
+	MenuModule,
+	ToastModule
   ]
 })
 export class PrimeNgModule { }
