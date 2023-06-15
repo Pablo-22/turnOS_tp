@@ -8,6 +8,9 @@ import { SpecialistAvailability } from '../models/specialist-availability';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { User } from 'src/app/core/models/users/user';
 import { AppointmentsService } from '../services/appointments.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'app-request-appointment',
@@ -36,14 +39,19 @@ export class RequestAppointmentComponent implements OnInit {
     private _usersService:UsersService, 
     private _availabilityService:SpecialistsAvailabilityService, 
     private _authService:AuthService,
-    private _appointmentsService:AppointmentsService
+    private _appointmentsService:AppointmentsService, 
+		private _router: Router,
+		private _loaderService:LoaderService
   ){
 
   }
 
   ngOnInit() {
+    this._loaderService.show()
+
     this._usersService.getByField('type', 'SPECIALIST').then(specialists => {
       this.specialists = specialists as Specialist[]
+      this._loaderService.hide()
       this.specialists.forEach(x => {
         
         this._availabilityService.getByField('specialistId', x.id).then(availability => {
@@ -85,7 +93,6 @@ export class RequestAppointmentComponent implements OnInit {
 
         this.appointmentsAvailable = SpecialistAvailability.applyRestrictions(this.appointmentsAvailable, x)
       })
-      console.log(this.appointmentsAvailable)
     }
   }
 
@@ -99,6 +106,15 @@ export class RequestAppointmentComponent implements OnInit {
       this.appointmentSelected.status = 'Solicitado'
       this.appointmentSelected.statusReason = 'El turno fue solicitado por el paciente. Está pendiente de aceptar por el especialista.'
       this._appointmentsService.create(this.appointmentSelected)
+
+      Swal.fire({
+        title: 'Turno Solicitado',
+        text: 'El turno fue solicitado. Ahora el especialista debe aceptarlo.',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      }).then(x => {
+        this._router.navigate(['/my-appointments'])
+      })
     }
   }
 }

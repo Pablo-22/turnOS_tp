@@ -32,7 +32,6 @@ export class MyAppointmentsComponent implements OnInit {
             label: 'Cancelar turno',
             icon: 'pi pi-cancel',
             command: () => {
-              console.log('hola');
             },
           },
         ]
@@ -46,7 +45,6 @@ export class MyAppointmentsComponent implements OnInit {
 
       this._appointmentsService.getByField('patientId', this.currentUser?.id ?? '').then(x => {
         this.appointments = x
-        console.log(x)
   
         this.appointments.forEach(appointment => {
           this._usersService.getById(appointment.specialistId).subscribe(x => {

@@ -27,7 +27,7 @@ import { OverlayModule } from 'primeng/overlay';
 import { InputMaskModule } from 'primeng/inputmask';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ToastModule } from 'primeng/toast';
-
+import { DragDropModule } from 'primeng/dragdrop';
 
 @NgModule({
   declarations: [],
@@ -60,7 +60,8 @@ import { ToastModule } from 'primeng/toast';
 	OverlayPanelModule,
 	InputMaskModule,
 	MenuModule,
-	ToastModule
+	ToastModule,
+	DragDropModule,
   ]
 })
 export class PrimeNgModule { }

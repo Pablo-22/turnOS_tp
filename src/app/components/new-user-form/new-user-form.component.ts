@@ -13,6 +13,11 @@ import { Patient } from 'src/app/features/login/models/patient'
 import { Specialist } from 'src/app/features/login/models/specialist'
 import Swal from 'sweetalert2'
 
+export interface Item{
+	id:string
+	name:string
+}
+
 @Component({
   selector: 'app-new-user-form',
   templateUrl: './new-user-form.component.html',
@@ -41,6 +46,12 @@ export class NewUserFormComponent {
 	currentFileRef:AngularFireStorageReference | undefined
 
 
+
+	availableItems: Item[];
+    selectedItems: Item[];
+    draggedItem: Item|undefined;
+
+
 	constructor(
 		private _auth:AuthService, 
 		private _users:UsersService, 
@@ -58,6 +69,14 @@ export class NewUserFormComponent {
 			email: new FormControl('', [Validators.required, Validators.email] ),
 			password: new FormControl('', [Validators.required, Validators.minLength(8)] ),
 		})
+
+		this.selectedItems = [];
+        this.availableItems = [
+            {id:'1', name: 'Manzana 🍎'},
+            {id:'2', name: 'Naranja 🍊'},
+            {id:'3', name: 'Banana 🍌'},
+        ]
+
 	}
 
 	ngOnInit(): void {
@@ -388,4 +407,34 @@ export class NewUserFormComponent {
 	goBack(){
 		this.onReturn.emit(true)
 	}
+
+
+
+	dragStart(product: Item) {
+        this.draggedItem = product;
+    }
+
+    drop() {
+        if (this.draggedItem) {
+            let draggedItemIndex = this.findIndex(this.draggedItem);
+            this.selectedItems = [...this.selectedItems, this.draggedItem];
+            this.availableItems = this.availableItems.filter((val, i) => i != draggedItemIndex);
+            this.draggedItem = undefined;
+        }
+    }
+
+    dragEnd() {
+        this.draggedItem = undefined;
+    }
+
+    findIndex(product: Item) {
+        let index = -1;
+        for (let i = 0; i < this.availableItems.length; i++) {
+            if (product.id === this.availableItems[i].id) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
 }

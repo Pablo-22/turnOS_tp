@@ -52,9 +52,6 @@ export class SpecialistAvailability extends DataEntity {
 			let reservedFlag = 0
 			for (let index = 0; index < appointed.length; index++) {
 				const x = appointed[index];
-				console.log('A: ', TimestampUtils.getDateByTimestamp(x.date), 'B: ', TimestampUtils.getDateByTimestamp(appointment.date))
-
-				console.log('A: ', appointment.timeRange, 'B: ', x.timeRange)
 
 				if (
 					TimestampUtils.getDateByTimestamp(x.date) == TimestampUtils.getDateByTimestamp(appointment.date) 
@@ -66,7 +63,6 @@ export class SpecialistAvailability extends DataEntity {
 			}
 
 			if (reservedFlag) {
-				console.log('RESERVED')
 				return false
 			}
 			return true
