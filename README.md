@@ -1,6 +1,7 @@
 # TurnOS
 
-Bienvenido a la documentación del proyecto de la Clínica OnLine. En esta guía, encontrarás descripciones detalladas de las pantallas y funcionalidades de la aplicación web desarrollada en Angular, utilizando Firebase como backend. La Clínica OnLine es un sistema especializado en la gestión de consultorios médicos, laboratorios y turnos para pacientes y especialistas.
+La Clínica OnLine es un sistema especializado en la gestión de consultorios médicos, laboratorios y turnos para pacientes y especialistas.
+
 
 # Índice
 - Introducción
@@ -29,12 +30,14 @@ A continuación, se describirán en detalle las diferentes pantallas y funcional
 ## Página de Bienvenida
 La pantalla de bienvenida es la primera pantalla que se muestra al acceder a la aplicación. Proporciona una introducción a la Clínica OnLine y presenta los accesos al login y registro del sistema. Desde aquí, los usuarios pueden iniciar sesión si ya tienen una cuenta o registrarse si son nuevos en la plataforma.
 
-[imagen]
+![Home](src/assets/readme/home.png)
 
 # Registro
 La pantalla de registro permite a los usuarios crear una cuenta en la Clínica OnLine. Hay dos tipos de registro disponibles: para Pacientes y para Especialistas.
 
-# Registro de Pacientes
+![Registro](src/assets/readme/crear-cuenta-1.png)
+
+## Registro de Pacientes
 En esta sección, los usuarios pueden proporcionar la siguiente información para completar su registro como pacientes:
 
 - Nombre
@@ -45,8 +48,8 @@ En esta sección, los usuarios pueden proporcionar la siguiente información par
 - Correo electrónico
 - Contraseña
 - 2 imágenes para el perfil
-
-[imagen]
+- 
+![crear-cuenta-paciente](src/assets/readme/crear-cuenta-paciente.png)
 
 ## Registro de Especialistas
 En esta sección, los usuarios pueden proporcionar la siguiente información para completar su registro como especialistas:
@@ -60,21 +63,24 @@ En esta sección, los usuarios pueden proporcionar la siguiente información par
 - Contraseña
 - Imagen de perfil
 - 
-[imagen]
+
+![crear-cuenta-especialista](src/assets/readme/crear-cuenta-especialista.png)
 
 ## Login
 La pantalla de inicio de sesión permite a los usuarios ingresar al sistema. Aquí, los usuarios pueden proporcionar sus credenciales de inicio de sesión y acceder a la plataforma.
 
+![Login](src/assets/readme/iniciar-sesion.png)
 
 **Pacientes:** Solo pueden ingresar si han verificado su correo electrónico al momento de registrarse.
 
 **Especialistas:** Solo pueden ingresar si un usuario administrador ha aprobado su cuenta y ha verificado su correo electrónico.
 La pantalla de inicio de sesión también muestra botones de acceso rápido para facilitar el inicio de sesión.
 
-[imagen]
 
 ## Sección Usuarios
 La sección de usuarios solo es visible para los usuarios con perfil de Administrador. Aquí, el administrador puede ver información detallada de los usuarios registrados y administrar su acceso al sistema. Además, desde esta sección, el administrador puede generar nuevos usuarios, incluyendo usuarios administradores.
+
+![usuarios](src/assets/readme/usuarios.png)
 
 Los campos requeridos para el registro de usuarios administradores son:
 
@@ -85,8 +91,9 @@ Los campos requeridos para el registro de usuarios administradores son:
 - Correo electrónico
 - Contraseña
 - Imagen de perfil
-- 
-[imagen]
+  
+
+![crear-admin](src/assets/readme/crear-admin.png)
 
 ## Mis Turnos (Paciente)
 En la sección "Mis Turnos", los pacientes pueden ver y administrar los turnos que han solicitado. La pantalla presenta un filtro único que permite a los pacientes filtrar los turnos por especialidad y especialista. La lista de turnos muestra información relevante sobre cada turno, como la fecha, la hora y el estado actual.
@@ -99,7 +106,7 @@ Desde esta sección, los pacientes pueden realizar las siguientes acciones:
 
 **Completar encuesta:** Solo visible si el especialista ha marcado el turno como realizado y ha dejado una reseña.
 
-[imagen]
+![mis-turnos](src/assets/readme/mis-turnos.png)
 
 ## Mis Turnos (Especialista)
 En la sección "**Mis Turnos**", los especialistas pueden ver los turnos asignados a ellos. La pantalla también incluye un filtro único que permite a los especialistas filtrar los turnos por especialidad y paciente. La lista de turnos muestra información relevante sobre cada turno, como la fecha, la hora y el estado actual.
@@ -136,9 +143,9 @@ Desde esta sección, el administrador puede realizar las siguientes acciones:
 ## Mi perfil
 La sección **"Mi perfil"** muestra los datos del usuario, como nombre, apellido, imágenes de perfil, etc. Esta sección está disponible para todos los usuarios.
 
-[imagen]
+![mi-perfil](src/assets/readme/mi-perfil-admin.png)
 
 ## Mis horarios (Especialista)
 La sección **"Mis horarios"** solo es visible para los usuarios con perfil de especialista. Aquí, los especialistas pueden marcar su disponibilidad horaria. Es importante tener en cuenta que un especialista puede tener más de una especialidad asociada.
 
-[imagen]
+![mis-horarios](src/assets/readme/mi-perfil-especialista.png)
