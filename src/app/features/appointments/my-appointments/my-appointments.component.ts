@@ -5,6 +5,7 @@ import { Appointment } from '../models/appointment';
 import { User } from 'src/app/core/models/users/user';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { MenuItem, MessageService } from 'primeng/api';
+import { LoaderService } from 'src/app/core/services/loader/loader.service';
 
 @Component({
   selector: 'app-my-appointments',
@@ -23,7 +24,10 @@ export class MyAppointmentsComponent implements OnInit {
     private _appointmentsService:AppointmentsService, 
     private _usersService:UsersService,
     private _authService:AuthService,
+		private _loaderService:LoaderService
   ){
+    this._loaderService.show()
+
     this.items = [
       {
         label: 'Acciones',
@@ -38,13 +42,12 @@ export class MyAppointmentsComponent implements OnInit {
       }
     ]
 
-
-
     this._authService.currentUser$.subscribe(x => { 
       this.currentUser = x 
 
       this._appointmentsService.getByField('patientId', this.currentUser?.id ?? '').then(x => {
         this.appointments = x
+        this._loaderService.hide()
   
         this.appointments.forEach(appointment => {
           this._usersService.getById(appointment.specialistId).subscribe(x => {
