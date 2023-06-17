@@ -6,6 +6,7 @@ import { User } from 'src/app/core/models/users/user';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { MenuItem, MessageService } from 'primeng/api';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
+import { AppointmentStates } from '../enums/appointment-states';
 
 @Component({
   selector: 'app-my-appointments',
@@ -18,7 +19,8 @@ export class MyAppointmentsComponent implements OnInit {
   appointments:Appointment[]|undefined
   users:User[]|undefined
   currentUser:User|undefined
-  items: MenuItem[];
+
+  searchStr:string = ''
 
   constructor(
     private _appointmentsService:AppointmentsService, 
@@ -27,20 +29,6 @@ export class MyAppointmentsComponent implements OnInit {
 		private _loaderService:LoaderService
   ){
     this._loaderService.show()
-
-    this.items = [
-      {
-        label: 'Acciones',
-        items: [
-          {
-            label: 'Cancelar turno',
-            icon: 'pi pi-cancel',
-            command: () => {
-            },
-          },
-        ]
-      }
-    ]
 
     this._authService.currentUser$.subscribe(x => { 
       this.currentUser = x 
@@ -59,6 +47,11 @@ export class MyAppointmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+  }
+
+  cancelAppointment(appointment:Appointment){
+    appointment.status  = AppointmentStates.Canceled
+    appointment.statusReason  = 'El turno fue cancelado por el paciente.'
+    this._appointmentsService.update(appointment)
   }
 }

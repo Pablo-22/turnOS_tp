@@ -24,7 +24,8 @@ import { RequestAppointmentComponent } from './features/appointments/request-app
 
 import localeES from '@angular/common/locales/es'
 import { registerLocaleData } from '@angular/common';
-import { MyAppointmentsComponent } from './features/appointments/my-appointments/my-appointments.component'
+import { MyAppointmentsComponent } from './features/appointments/my-appointments/my-appointments.component';
+import { AppointmentsFilterPipe } from './pipes/appointments-filter.pipe'
 registerLocaleData(localeES, 'es')
 
 @NgModule({
@@ -44,6 +45,7 @@ registerLocaleData(localeES, 'es')
     TimePipe,
     RequestAppointmentComponent,
     MyAppointmentsComponent,
+    AppointmentsFilterPipe,
   ],
   imports: [
     CoreModule,

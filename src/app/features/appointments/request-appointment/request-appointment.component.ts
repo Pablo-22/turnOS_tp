@@ -11,6 +11,7 @@ import { AppointmentsService } from '../services/appointments.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
+import { AppointmentStates } from '../enums/appointment-states';
 
 @Component({
   selector: 'app-request-appointment',
@@ -103,7 +104,7 @@ export class RequestAppointmentComponent implements OnInit {
 
   onAccept(){
     if (this.appointmentSelected) {
-      this.appointmentSelected.status = 'Solicitado'
+      this.appointmentSelected.status = AppointmentStates.Requested
       this.appointmentSelected.statusReason = 'El turno fue solicitado por el paciente. Está pendiente de aceptar por el especialista.'
       this._appointmentsService.create(this.appointmentSelected)
 

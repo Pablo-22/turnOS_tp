@@ -47,9 +47,30 @@ export class NewUserFormComponent {
 
 
 
-	availableItems: Item[];
-    selectedItems: Item[];
-    draggedItem: Item|undefined;
+	availableItems: string[] = []
+    selectedItems: string[] = []
+    draggedItem: string|undefined
+	fruits:string[] = [
+		'🍎',
+		'🍊',
+		'🍌',
+		'🍉',
+		'🍓',
+		'🍐',
+		'🍏',
+	]
+
+	notFruits:string[] = [
+		'🍔',
+		'🌭',
+		'🥓',
+		'🧀',
+		'🍗',
+		'🥨',
+		'🍰',
+	]
+
+	captchaStatus:boolean = false
 
 
 	constructor(
@@ -70,16 +91,11 @@ export class NewUserFormComponent {
 			password: new FormControl('', [Validators.required, Validators.minLength(8)] ),
 		})
 
-		this.selectedItems = [];
-        this.availableItems = [
-            {id:'1', name: 'Manzana 🍎'},
-            {id:'2', name: 'Naranja 🍊'},
-            {id:'3', name: 'Banana 🍌'},
-        ]
-
+		
 	}
 
 	ngOnInit(): void {
+		this.restartCaptcha()
 	}
 
 	ngOnChanges() {
@@ -410,16 +426,16 @@ export class NewUserFormComponent {
 
 
 
-	dragStart(product: Item) {
-        this.draggedItem = product;
+	dragStart(item: string) {
+        this.draggedItem = item;
     }
 
     drop() {
         if (this.draggedItem) {
-            let draggedItemIndex = this.findIndex(this.draggedItem);
-            this.selectedItems = [...this.selectedItems, this.draggedItem];
-            this.availableItems = this.availableItems.filter((val, i) => i != draggedItemIndex);
-            this.draggedItem = undefined;
+            this.selectedItems = [...this.selectedItems, this.draggedItem]
+            this.availableItems = this.availableItems.filter(x => x != this.draggedItem)
+            this.draggedItem = undefined
+			this.checkCaptcha()
         }
     }
 
@@ -427,14 +443,45 @@ export class NewUserFormComponent {
         this.draggedItem = undefined;
     }
 
-    findIndex(product: Item) {
-        let index = -1;
-        for (let i = 0; i < this.availableItems.length; i++) {
-            if (product.id === this.availableItems[i].id) {
-                index = i;
-                break;
-            }
-        }
-        return index;
-    }
+
+	getItems(amount:number, type:'fruit'|'notFruit'){
+		if (type == 'fruit') {
+			this.shuffleArray(this.fruits)
+			return this.fruits.slice(0, amount)
+		} else if(type == 'notFruit') {
+			this.shuffleArray(this.notFruits)
+			return this.notFruits.slice(0, amount)
+		}else {
+			return []
+		}
+	}
+
+	shuffleArray(array:any) {
+		for (var i = array.length - 1; i > 0; i--) {
+			var j = Math.floor(Math.random() * (i + 1));
+			var temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+		}
+		return array;
+	}
+
+	checkCaptcha(){
+		if(this.availableItems.some(r => this.fruits.includes(r)) || 
+			this.selectedItems.some(r => this.notFruits.includes(r))){
+			console.log('CAPTCHA false')
+			this.captchaStatus = false
+		}else {
+			console.log('CAPTCHA true')
+			this.captchaStatus = true
+		}
+	}
+
+	restartCaptcha(){
+		this.captchaStatus = false
+		this.availableItems = []
+		this.selectedItems = []
+        this.availableItems.push(...this.getItems(3, 'fruit'), ...this.getItems(1, 'notFruit'))
+		this.shuffleArray(this.availableItems)
+	}
 }

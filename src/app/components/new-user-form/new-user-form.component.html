@@ -62,25 +62,26 @@
 			<div>Arrastre las frutas en la canasta:</div>
 		</div>
 		<div class="card flex flex-wrap gap-3 mt-2 mb-5">
-			<div class="p-2 border-1 surface-border border-round w-15rem">
+			<div class="p-2 border-1 surface-border border-round">
 				<ul class="list-none flex flex-column gap-2 p-0 m-0">
 					<li *ngFor="let product of availableItems" class="p-2 border-round shadow-1" pDraggable (onDragStart)="dragStart(product)" (onDragEnd)="dragEnd()">
-						{{product.name}}
+						{{product}}
 					</li>
 				</ul>
 			</div>
-			<div class="p-2 border-1 surface-border border-round w-15rem" pDroppable (onDrop)="drop()">
+			<div class="p-2 border-1 surface-border border-round w-5rem" pDroppable (onDrop)="drop()">
 				<p class="text-center surface-border border-bottom-1">Canasta</p>
 				<ul class="list-none flex flex-column gap-2 p-0 m-0" *ngIf="selectedItems" >
 					<li *ngFor="let product of selectedItems" class="p-2 border-round shadow-1">
-						{{product.name}}
+						{{product}}
 					</li>
 				</ul>
 			</div>
+			<p-button icon="pi pi-replay" styleClass="p-button-rounded p-button-text" (click)="this.restartCaptcha()"></p-button>
 		</div>
 
 	
-		<button [disabled]="this.availableItems.length > 0"
+		<button [disabled]="!this.captchaStatus"
 		 (click)="this.onRegister()" pButton class="w-full" type="button" label="Registrar" icon="pi pi-check">
 		</button>
 	</form>
