@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { UsersService } from '../../models/users/users.service';
 import firebase from "@firebase/app-compat";
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 
 
@@ -16,6 +16,9 @@ export class AuthService {
 
   private currentUserAccessSubject = new BehaviorSubject<User|undefined>({} as User);
   currentUser$ = this.currentUserAccessSubject.asObservable();
+  currentUser:User|undefined
+
+  destroySubject: Subject<void> = new Subject();
 
   constructor(
     private _auth : AngularFireAuth, 
@@ -29,8 +32,11 @@ export class AuthService {
         });
       } else {
         this.currentUserAccessSubject.next(undefined);
+        this.destroySubject.next()
       }
     })
+
+    this.currentUser$.subscribe(x => { this.currentUser })
   }
 
   async login(email: string, password: string){
