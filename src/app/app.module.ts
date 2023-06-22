@@ -25,7 +25,13 @@ import { RequestAppointmentComponent } from './features/appointments/request-app
 import localeES from '@angular/common/locales/es'
 import { registerLocaleData } from '@angular/common';
 import { MyAppointmentsComponent } from './features/appointments/my-appointments/my-appointments.component';
-import { AppointmentsFilterPipe } from './pipes/appointments-filter.pipe'
+import { AppointmentsFilterPipe } from './pipes/appointments-filter.pipe';
+import { SurveyComponent } from './features/appointments/survey/survey.component';
+import { ReviewAppointmentComponent } from './features/appointments/review-appointment/review-appointment.component';
+import { ViewAppointmentReviewComponent } from './features/appointments/view-appointment-review/view-appointment-review.component';
+import { SpecialitiesListComponent } from './components/specialities-list/specialities-list.component';
+import { SpecialistFilterPipe } from './pipes/specialist-filter.pipe';
+import { PatientsComponent } from './features/patients/patients.component'
 registerLocaleData(localeES, 'es')
 
 @NgModule({
@@ -46,6 +52,12 @@ registerLocaleData(localeES, 'es')
     RequestAppointmentComponent,
     MyAppointmentsComponent,
     AppointmentsFilterPipe,
+    SurveyComponent,
+    ReviewAppointmentComponent,
+    ViewAppointmentReviewComponent,
+    SpecialitiesListComponent,
+    SpecialistFilterPipe,
+    PatientsComponent,
   ],
   imports: [
     CoreModule,

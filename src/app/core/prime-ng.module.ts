@@ -28,6 +28,9 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ToastModule } from 'primeng/toast';
 import { DragDropModule } from 'primeng/dragdrop';
+import { RatingModule } from 'primeng/rating';
+import { TagModule } from 'primeng/tag';
+
 
 @NgModule({
   declarations: [],
@@ -62,6 +65,8 @@ import { DragDropModule } from 'primeng/dragdrop';
 	MenuModule,
 	ToastModule,
 	DragDropModule,
+	RatingModule,
+	TagModule,
   ]
 })
 export class PrimeNgModule { }

@@ -47,17 +47,22 @@ export class AppointmentsService {
     const appointment = new Appointment()
     appointment.id = data['id']
     appointment.specialistId = data['specialistId']
+    appointment.specialist = data['specialist']
     appointment.patientId = data['patientId']
+    appointment.patient = data['patient']
     appointment.date = data['date']
     appointment.timeRange = data['timeRange']
     appointment.speciality = data['speciality']
     appointment.status = data['status']
     appointment.statusReason = data['statusReason']
+    appointment.review = data['review']
+    appointment.rating = data['rating']
+    appointment.survey = data['survey']
+    appointment.canceledReason = data['canceledReason']
     return appointment 
   }
 
   cleanAppointment(appointment:Appointment){
-    appointment.specialist = undefined
     return appointment
   }
 }

@@ -7,6 +7,8 @@ import { TimeRange } from '../models/time-range';
 import { DayAvailability } from '../models/day-availability';
 import Swal from 'sweetalert2';
 import { Specialist } from '../../login/models/specialist';
+import { WeekAvailability } from '../models/week-availability';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-specialist-availability',
@@ -14,6 +16,8 @@ import { Specialist } from '../../login/models/specialist';
   styleUrls: ['./specialist-availability.component.scss']
 })
 export class SpecialistAvailabilityComponent {
+
+	private destroySubject: Subject<void> = new Subject();
 
 	days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
 	selectedDays:string[] = []
@@ -106,7 +110,9 @@ export class SpecialistAvailabilityComponent {
 			});
 			this.currentUserAvailability.addAvailability(speciality, daysAvailability)
 
-			this._auth.currentUser$.subscribe(x => {
+			this._auth.currentUser$.pipe(
+				takeUntil(this.destroySubject)
+			  ).subscribe(x => {
 				if (x) {
 					this.currentUserAvailability.specialistId = x.id
 					if (isNewAvailability) {
@@ -118,5 +124,23 @@ export class SpecialistAvailabilityComponent {
 			})
 		})
 		this.selectedDays = []
+	}
+
+	deleteAvailability(speciality:string, dayAvailability:DayAvailability){
+		this.currentUserAvailability.weekAvailability.forEach((week: WeekAvailability) => {
+			if (week.speciality === speciality) {
+			  const index = week.daysAvailability.findIndex(day => day === dayAvailability);
+			  if (index !== -1) {
+				week.daysAvailability.splice(index, 1);
+			  }
+			}
+		});
+
+		this._availabilityService.update(this.currentUserAvailability);
+	}
+
+	ngOnDestroy(){
+		// Unsubscribe from all observables
+		this.destroySubject.next();
 	}
 }

@@ -11,6 +11,8 @@ import { CloudStorageService } from 'src/app/core/services/cloud-storage/cloud-s
 import { LoaderService } from 'src/app/core/services/loader/loader.service'
 import { Patient } from 'src/app/features/login/models/patient'
 import { Specialist } from 'src/app/features/login/models/specialist'
+import { Speciality } from 'src/app/features/signin/models/speciality'
+import { SpecialitiesService } from 'src/app/features/signin/specialities.service'
 import Swal from 'sweetalert2'
 
 export interface Item{
@@ -35,7 +37,7 @@ export class NewUserFormComponent {
 
 	@Output() onReturn = new EventEmitter<boolean>()
 
-	specialities:string[] = ['Pediatría', 'Psicología', 'Oftalmología', 'Otorrinolaringología', 'Cardiología' ]
+	specialities:Speciality[] = []
 	specialitySelected:string[] = []
 
 	    
@@ -78,7 +80,8 @@ export class NewUserFormComponent {
 		private _users:UsersService, 
 		private _storage: CloudStorageService, 
 		private _router: Router,
-		private _loaderService:LoaderService
+		private _loaderService:LoaderService,
+		private _specialitiesService:SpecialitiesService
 	) {
 		this.form = new FormGroup({
 			name: new FormControl('', [Validators.required] ),
@@ -89,6 +92,10 @@ export class NewUserFormComponent {
 			healthInsurance: new FormControl({value: '', disabled: this.userType !== 'PATIENT'}, [Validators.required] ),
 			email: new FormControl('', [Validators.required, Validators.email] ),
 			password: new FormControl('', [Validators.required, Validators.minLength(8)] ),
+		})
+
+		this._specialitiesService.getAll().subscribe(x => {
+			this.specialities = x
 		})
 
 		
@@ -111,6 +118,16 @@ export class NewUserFormComponent {
 	}
 
 	onRegister(){
+		if (this.checkCaptcha() == false) {
+			Swal.fire({
+				title: 'Error',
+				text: 'Debe completar el captcha para poder realizar el registro.',
+				icon: 'error',
+				confirmButtonText: 'Ok'
+			})
+			return
+		}
+
 		this._loaderService.show()
 		const userBirthDate = moment(this.userBirthDate, "DD/MM/YYYY").toDate()
 		if (userBirthDate.toString() == 'Invalid Date') {
@@ -469,11 +486,11 @@ export class NewUserFormComponent {
 	checkCaptcha(){
 		if(this.availableItems.some(r => this.fruits.includes(r)) || 
 			this.selectedItems.some(r => this.notFruits.includes(r))){
-			console.log('CAPTCHA false')
 			this.captchaStatus = false
+			return false
 		}else {
-			console.log('CAPTCHA true')
 			this.captchaStatus = true
+			return true
 		}
 	}
 

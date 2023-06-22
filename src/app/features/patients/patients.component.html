@@ -1,0 +1,15 @@
+<div class="p-2 px-4 mx-6">
+	<div *ngIf="this.patientSelected" class="flex align-items-center gap-2 border-100 chip w-fit">
+		<span class="text-base font-segoe">Paciente: {{ this.patientSelected.name }} {{ this.patientSelected.surname }}</span>
+		<p-button (onClick)="onFilterReset()" icon="pi pi-times" styleClass="p-button-rounded p-button-text"></p-button>
+	</div>
+
+	<div class="text-4xl font-segoe"> Pacientes: </div>
+
+	<div class="flex gap-8 flex-wrap avatars-deck mt-4">
+		<div *ngFor="let patient of patients" (click)="this.onPatientSelected(patient)">
+			<img src="{{ patient.images[0] }}" class="avatar" alt="">
+			<div class="mt-2 font-medium text-800"> {{ patient.name }} {{ patient.surname }} </div>
+		</div>
+	</div>
+</div>

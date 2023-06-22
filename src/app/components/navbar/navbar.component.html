@@ -9,7 +9,9 @@
 
 			<button *ngIf="['PATIENT', 'SPECIALIST'].includes(this.currentUser?.type ?? '')" [routerLink]="'/my-appointments'" pButton pRipple class="p-button-text p-button-plain nav-item"> Mis turnos </button>
 
-			<button *ngIf="['ADMIN'].includes(this.currentUser?.type ?? '')" [routerLink]="'/appointments-manager'" pButton pRipple class="p-button-text p-button-plain nav-item"> Turnos </button>
+			<button *ngIf="['SPECIALIST'].includes(this.currentUser?.type ?? '')" [routerLink]="'/patients'" pButton pRipple class="p-button-text p-button-plain nav-item"> Pacientes </button>
+
+			<button *ngIf="['ADMIN'].includes(this.currentUser?.type ?? '')" [routerLink]="'/my-appointments'" pButton pRipple class="p-button-text p-button-plain nav-item"> Turnos </button>
 
 			<button *ngIf="['PATIENT','ADMIN'].includes(this.currentUser?.type ?? '')" [routerLink]="'/request-appointment'" pButton pRipple class="p-button-text p-button-plain nav-item"> Solicitar turno </button>
 

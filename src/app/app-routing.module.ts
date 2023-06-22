@@ -7,6 +7,7 @@ import { UsersManagerComponent } from './features/users-manager/users-manager.co
 import { MyProfileComponent } from './features/my-profile/my-profile.component';
 import { RequestAppointmentComponent } from './features/appointments/request-appointment/request-appointment.component';
 import { MyAppointmentsComponent } from './features/appointments/my-appointments/my-appointments.component';
+import { PatientsComponent } from './features/patients/patients.component';
 
 const routes: Routes = [
   {path: '', component:HomeComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'my-profile', component:MyProfileComponent},
   {path: 'request-appointment', component:RequestAppointmentComponent},
   {path: 'my-appointments', component:MyAppointmentsComponent},
+  {path: 'patients', component:PatientsComponent},
 ];
 
 @NgModule({

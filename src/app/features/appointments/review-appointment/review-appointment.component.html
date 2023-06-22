@@ -1,0 +1,22 @@
+<div class="p-dialog-content">
+	<h1>Calificar atención</h1>
+
+	<div ngClass="mb-3" *ngIf="this.showErrorMsg" class="text-red-400">Error: Todos los campos son obligatorios</div>
+
+	<div name="rate" id="rating" class="mb-4" ><p-rating [(ngModel)]="rating" [cancel]="false"></p-rating></div>
+
+
+	<div class="p-field mb-4">
+		<div><label class="d-block" for="review">Deja un comentario:</label></div>
+		<textarea
+			name="review"
+			id="review"
+			rows="3"
+			class="p-inputtextarea p-inputtext p-component"
+			[(ngModel)]="review"
+		></textarea>
+	</div>
+	<button (click)="this.onSubmit()" name="submit" type="submit" class="p-button p-button-primary">
+		Enviar reseña
+	</button>
+</div>

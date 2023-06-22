@@ -3,5 +3,6 @@ export enum AppointmentStates {
 	Requested 	= 1,
 	Accepted 	= 2,
 	Completed 	= 3,
-	Canceled 	= 4,
+	Rejected 	= 4,
+	Canceled 	= 5,
 }

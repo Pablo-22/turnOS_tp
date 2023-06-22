@@ -43,11 +43,13 @@
 				[customUpload]="true" (uploadHandler)="handleFileInput($event)" 
 				[fileLimit]="2" [showUploadButton]="false" [showCancelButton]="false"
 				(onSelect)="this.handleFileInput($event.currentFiles)"
-				(onRemove)="this.removeFile($event.file)">
+				(onRemove)="this.removeFile($event.file)"
+				chooseLabel="Cargar"
+				>
 			</p-fileUpload>
 		</div>
 	
-		<app-items-list *ngIf="this.userType == 'SPECIALIST'" (selectedItem)="this.specialitySelected = $event" [items]="this.specialities" title="Especialidad"></app-items-list>
+		<app-specialities-list *ngIf="this.userType == 'SPECIALIST'" (selectedItem)="this.specialitySelected = $event"></app-specialities-list>
 		<div class="mb-4"></div>
 	
 	

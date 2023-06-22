@@ -4,6 +4,7 @@ import { WeekAvailability } from "./week-availability";
 import { DayAvailability } from "./day-availability";
 import { TimeRange } from "./time-range";
 import { TimestampUtils } from "src/app/core/utils/timestamp-utils";
+import { AppointmentStates } from "../enums/appointment-states";
 
 export class SpecialistAvailability extends DataEntity {
 	specialistId:string = ''
@@ -56,6 +57,7 @@ export class SpecialistAvailability extends DataEntity {
 				if (
 					TimestampUtils.getDateByTimestamp(x.date) == TimestampUtils.getDateByTimestamp(appointment.date) 
 					&& x.specialistId == appointment.specialistId && TimeRange.IsBetween(appointment.timeRange, x.timeRange)
+					&& [AppointmentStates.Accepted, AppointmentStates.Requested, AppointmentStates.Completed].includes(x.status)
 				) {
 					reservedFlag = 1
 					break;
@@ -71,12 +73,26 @@ export class SpecialistAvailability extends DataEntity {
 
 	addAvailability(speciality:string, daysAvailability:DayAvailability[]){
 		let specialityAvailabilityExists = 0
+		let overlapsFlag = 0
 
 		// Chequea si existe alguna disponibilidad semanal para esta especialidad
 		this.weekAvailability.forEach(weekAvailability => {
-			if (weekAvailability.speciality == speciality) {
+			if(weekAvailability.speciality == speciality) {
 				
 				specialityAvailabilityExists = 1
+				weekAvailability.daysAvailability.forEach(dayAvailabilityOriginal => {
+					daysAvailability.forEach(dayAvailabilityNew => {
+						if (dayAvailabilityOriginal.dayIndex == dayAvailabilityNew.dayIndex || DayAvailability.overlaps(dayAvailabilityOriginal, dayAvailabilityNew)
+						){
+							overlapsFlag = 1
+						}
+					})
+				})
+
+				if (overlapsFlag) {
+					return
+				}
+
 				weekAvailability.daysAvailability.push(...daysAvailability)
 			}
 		})

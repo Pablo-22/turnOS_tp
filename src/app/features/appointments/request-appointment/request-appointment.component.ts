@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
 import { AppointmentStates } from '../enums/appointment-states';
+import { Speciality } from '../../signin/models/speciality';
+import { SpecialitiesService } from '../../signin/specialities.service';
 
 @Component({
   selector: 'app-request-appointment',
@@ -20,16 +22,16 @@ import { AppointmentStates } from '../enums/appointment-states';
 })
 export class RequestAppointmentComponent implements OnInit {
   tabs: MenuItem[] = [
-    { label: 'Por especialista', icon: 'pi pi-user' },
-    { label: 'Por especialidad', icon: 'pi pi-heart' },
+    { label: 'Especialidad', icon: 'pi pi-heart' },
+    { label: 'Especialista', icon: 'pi pi-user' },
   ]
   activeTab: MenuItem = this.tabs[0]
   
   specialists:Specialist[] = []
-  specialities:string[] = []
+  specialities:Speciality[] = []
 
   specialistSelected:Specialist = new Specialist()
-  specialitySelected:string = 'Pediatría'
+  specialitySelected:Speciality = new Speciality()
 
   appointmentsAvailable:Appointment[] = []
   appointmentSelected:Appointment|undefined
@@ -41,6 +43,7 @@ export class RequestAppointmentComponent implements OnInit {
     private _availabilityService:SpecialistsAvailabilityService, 
     private _authService:AuthService,
     private _appointmentsService:AppointmentsService, 
+    private _specialitiesService:SpecialitiesService, 
 		private _router: Router,
 		private _loaderService:LoaderService
   ){
@@ -54,17 +57,15 @@ export class RequestAppointmentComponent implements OnInit {
       this.specialists = specialists as Specialist[]
       this._loaderService.hide()
       this.specialists.forEach(x => {
-        
         this._availabilityService.getByField('specialistId', x.id).then(availability => {
+          console.log(x, x.id)
+          console.log(availability)
           x.availability = availability[0]
         })
+      })
 
-        x.speciality.forEach(speciality => {
-          if (!this.specialities.includes(speciality)) {
-            this.specialities.push(speciality)
-          }
-        })
-
+      this._specialitiesService.getAll().subscribe(x => {
+        this.specialities = x
       })
     })
 
@@ -74,9 +75,14 @@ export class RequestAppointmentComponent implements OnInit {
   }
 
   onSpecialistSelected(specialist:Specialist){
-    this.specialitySelected = ''
     this.specialistSelected = specialist
     this.showAppointments()
+  }
+
+  onSpecialitySelected(speciality:Speciality){
+    this.specialitySelected = speciality
+    this.specialistSelected = new Specialist()
+    this.activeTab = this.tabs[1]
   }
 
   clearSelectedData(){
@@ -88,10 +94,10 @@ export class RequestAppointmentComponent implements OnInit {
     this.clearSelectedData()
 
     if (this.specialistSelected && this.specialitySelected) {
-      this.appointmentsAvailable = SpecialistAvailability.getAvailableAppointmentsBySpeciality(this.specialistSelected.availability, this.specialitySelected, 15)
+      console.log(this.specialistSelected)
+      this.appointmentsAvailable = SpecialistAvailability.getAvailableAppointmentsBySpeciality(this.specialistSelected.availability, this.specialitySelected.name, 15)
 
       this._appointmentsService.getByField('specialistId', this.specialistSelected.id).then(x => {
-
         this.appointmentsAvailable = SpecialistAvailability.applyRestrictions(this.appointmentsAvailable, x)
       })
     }
@@ -117,5 +123,13 @@ export class RequestAppointmentComponent implements OnInit {
         this._router.navigate(['/my-appointments'])
       })
     }
+  }
+
+  onFilterReset(){
+    this.specialitySelected = new Speciality()
+    this.specialistSelected = new Specialist()
+    this.appointmentSelected = undefined
+    this.appointmentsAvailable = []
+    this.activeTab = this.tabs[0]
   }
 }
