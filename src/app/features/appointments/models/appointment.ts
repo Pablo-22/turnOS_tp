@@ -6,12 +6,14 @@ import { AppointmentStates } from "../enums/appointment-states"
 import { Patient } from "../../login/models/patient"
 import { Survey } from "./survey"
 import { Speciality } from "../../signin/models/speciality"
+import { ClinicalRecords } from "./clinical-records"
 
 export class Appointment extends DataEntity {
 	specialistId:string = ''
 	specialist?:Specialist
 	patientId:string = ''
 	patient?:Patient
+	clinicalRecords?:ClinicalRecords
 	date:Timestamp = new Timestamp(0, 0)
 	timeRange = new TimeRange()
 	speciality:string = ''

@@ -16,8 +16,6 @@ export class Measurement {
 }
 
 export class ClinicalRecords extends DataEntity {
-  record: any;
-  [x: string]: any;
 	appointmentId:string = ''
 	appointment:Appointment|undefined
 

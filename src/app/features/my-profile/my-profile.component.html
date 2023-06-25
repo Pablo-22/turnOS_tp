@@ -74,10 +74,10 @@
                 <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3">
                     Administre su disponibilidad horaria para brindar atención a los pacientes.
 				</div>
+            </li>
 
-                <div class="w-6 md:w-2 flex justify-content-end">
-                    <button pButton pRipple label="Editar" icon="pi pi-pencil" class="p-button-text"></button>
-                </div>
+            <li class="mt-4" *ngIf="['PATIENT'].includes(this.currentUser?.type ?? '')">
+                <button (click)="this.viewClinicalRecords()" pButton pRipple label="Ver historia clínica" icon="pi pi-book" class="p-button-primary"></button>
             </li>
         </ul>
     </div>

@@ -14,6 +14,7 @@ import { LoaderService } from 'src/app/core/services/loader/loader.service';
 import { AppointmentStates } from '../enums/appointment-states';
 import { Speciality } from '../../signin/models/speciality';
 import { SpecialitiesService } from '../../signin/specialities.service';
+import { Patient } from '../../login/models/patient';
 
 @Component({
   selector: 'app-request-appointment',
@@ -24,14 +25,17 @@ export class RequestAppointmentComponent implements OnInit {
   tabs: MenuItem[] = [
     { label: 'Especialidad', icon: 'pi pi-heart' },
     { label: 'Especialista', icon: 'pi pi-user' },
+    { label: 'Paciente', icon: 'pi pi-user' },
   ]
   activeTab: MenuItem = this.tabs[0]
   
   specialists:Specialist[] = []
   specialities:Speciality[] = []
+  patients:Patient[] = []
 
   specialistSelected:Specialist = new Specialist()
   specialitySelected:Speciality = new Speciality()
+  patientSelected:Patient = new Patient()
 
   appointmentsAvailable:Appointment[] = []
   appointmentSelected:Appointment|undefined
@@ -71,12 +75,25 @@ export class RequestAppointmentComponent implements OnInit {
 
     this._authService.currentUser$.subscribe(x => {
       this.currentUser = x
+      if (this.currentUser?.type == 'ADMIN') {
+        this._usersService.getByField('type', 'PATIENT').then(patients => {
+          this.patients = patients as Patient[]
+        })
+      }
     })
   }
 
   onSpecialistSelected(specialist:Specialist){
     this.specialistSelected = specialist
     this.showAppointments()
+
+    if (this.currentUser?.type == 'ADMIN') {
+      this.activeTab = this.tabs[2]
+    }
+  }
+
+  onPatientSelected(patient:Patient){
+    this.patientSelected = patient
   }
 
   onSpecialitySelected(speciality:Speciality){
@@ -104,12 +121,16 @@ export class RequestAppointmentComponent implements OnInit {
   }
 
   onAppointmentSelected(appointment:Appointment){
-    appointment.patientId = this.currentUser?.id ?? ''
+    if (this.currentUser?.type == 'ADMIN') {
+      appointment.patientId = this.patientSelected?.id ?? ''
+    }else {
+      appointment.patientId = this.currentUser?.id ?? ''
+    }
     this.appointmentSelected = appointment
   }
 
   onAccept(){
-    if (this.appointmentSelected) {
+    if (this.appointmentSelected && this.appointmentSelected.patientId) {
       this.appointmentSelected.status = AppointmentStates.Requested
       this.appointmentSelected.statusReason = 'El turno fue solicitado por el paciente. Está pendiente de aceptar por el especialista.'
       this._appointmentsService.create(this.appointmentSelected)
@@ -128,6 +149,7 @@ export class RequestAppointmentComponent implements OnInit {
   onFilterReset(){
     this.specialitySelected = new Speciality()
     this.specialistSelected = new Specialist()
+    this.patientSelected = new Patient()
     this.appointmentSelected = undefined
     this.appointmentsAvailable = []
     this.activeTab = this.tabs[0]

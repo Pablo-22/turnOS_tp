@@ -1,0 +1,73 @@
+<div style="width: 40rem;">
+	<h2>Historia Clínica</h2>
+	
+	<div class="mb-4">
+		<div class="font-bold">Turno</div>
+		<div>
+			<span>Especialidad: </span>
+			<span class="text-500 ml-2"> {{currentAppointment.speciality}} </span>
+		</div>
+		<span class="text-green-500 font-medium">
+			{{ currentAppointment.date | timestampToStrDate }}
+		</span>
+		
+		<span class="text-500 ml-2">
+			{{ currentAppointment.timeRange.from | time }} -
+			{{ currentAppointment.timeRange.to | time }}
+		</span>
+	</div>
+
+
+	<div *ngIf="this.currentClinicalRecord.id" class="flex flex-column">
+		<div class="flex flex-row gap-5 flex-wrap mb-4">
+			<div>
+				<div class="mb-2 text-primary font-medium"><label> Altura </label></div>
+				<div class="flex flex-row">
+					{{ this.currentClinicalRecord.height.value }} {{ this.currentClinicalRecord.height.unit }}
+				</div>
+			</div>
+
+			<div>
+				<div class="mb-2 text-primary font-medium"><label> Peso </label></div>
+				<div>
+					{{ this.currentClinicalRecord.weight.value }} {{ this.currentClinicalRecord.weight.unit }}
+				</div>
+			</div>
+
+			<div>
+				<div class="mb-2 text-primary font-medium"><label> Presión </label></div>
+				<div class="flex flex-row">
+					{{ this.currentClinicalRecord.pressure.value }} {{ this.currentClinicalRecord.pressure.unit }}
+				</div>
+			</div>
+
+			<div>
+				<div class="mb-2 text-primary font-medium"><label> Temperatura </label></div>
+				<div class="">
+					{{ this.currentClinicalRecord.temperature.value }} {{ this.currentClinicalRecord.temperature.unit }}
+				</div>
+			</div>
+		</div>
+
+		<h2> Datos personalizados </h2>
+
+		<div class="flex flex-row flex-wrap gap-3">
+			<div class="flex  justify-content-between mb-4 shadow-2 p-3 w-fit" *ngFor="let measurement of this.currentClinicalRecord.dynamicMeasurements; index as i">
+				<div>
+					<div class="text-primary font-medium mb-2">{{ measurement.name }}</div>
+					{{ measurement.value }}
+					{{ measurement.unit }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<p-button label="Anterior" icon="pi pi-angle-left" styleClass="p-button-rounded p-button-text"  
+		(click)="onPrevious()"
+	>
+	</p-button>
+	<p-button iconPos="right" label="Siguiente" icon="pi pi-angle-right" styleClass="p-button-rounded p-button-text"  
+		(click)="onNext()"
+	>
+	</p-button>
+</div>

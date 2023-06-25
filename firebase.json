@@ -2,8 +2,8 @@
   "hosting": [
     {
       "target": "turnOS_tp",
-      "source": ".",
-      "frameworksBackend": {}
+      "frameworksBackend": {},
+      "public": "dist/turn-os-tp"
     }
   ]
 }

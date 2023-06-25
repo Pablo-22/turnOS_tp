@@ -13,6 +13,9 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ReviewAppointmentComponent } from '../review-appointment/review-appointment.component';
 import { SurveyComponent } from '../survey/survey.component';
 import { ViewAppointmentReviewComponent } from '../view-appointment-review/view-appointment-review.component';
+import { NewClinicalRecordFormComponent } from '../new-clinical-record-form/new-clinical-record-form.component';
+import { ClinicalRecords } from '../models/clinical-records';
+import { ClinicalRecordsService } from '../services/clinical-records.service';
 
 @Component({
   selector: 'app-my-appointments',
@@ -38,6 +41,7 @@ export class MyAppointmentsComponent implements OnInit {
     private _usersService: UsersService,
     private _authService: AuthService,
     private _loaderService: LoaderService,
+    private _clinicalRecords: ClinicalRecordsService,
     public dialogService: DialogService, 
     public messageService: MessageService
   ) {
@@ -60,6 +64,10 @@ export class MyAppointmentsComponent implements OnInit {
               .subscribe((x) => {
                 appointment.specialist = x;
               });
+            
+            this._clinicalRecords.getByField('appointmentId', appointment.id).then(x => {
+              appointment.clinicalRecords = x[0]
+            })
           });
 
         });
@@ -76,6 +84,10 @@ export class MyAppointmentsComponent implements OnInit {
               .subscribe((x) => {
                 appointment.patient = x;
               });
+
+            this._clinicalRecords.getByField('appointmentId', appointment.id).then(x => {
+              appointment.clinicalRecords = x[0]
+            })
           });
         });
       } else if (x?.type == 'ADMIN'){
@@ -95,6 +107,10 @@ export class MyAppointmentsComponent implements OnInit {
               .subscribe((x) => {
                 appointment.specialist = x;
               });
+            
+            this._clinicalRecords.getByField('appointmentId', appointment.id).then(x => {
+              appointment.clinicalRecords = x[0]
+            })
           });
         })
       }
@@ -321,8 +337,18 @@ export class MyAppointmentsComponent implements OnInit {
   }
 
   finishAppointment(): void {
-    this.appointmentSelected.status = AppointmentStates.Completed;
-    this.appointmentSelected.statusReason = 'El turno fue marcado como completado por el especialista.';
-    this._appointmentsService.update(this.appointmentSelected);
+    this.dialog = this.dialogService.open(NewClinicalRecordFormComponent, {
+      header: 'Cargar datos del paciente',
+      contentStyle: { overflow: 'auto' },
+      data: this.appointmentSelected
+    });
+
+    this.dialog.onClose.subscribe((result:ClinicalRecords) => {
+      if (result.id) {
+        this.appointmentSelected.status = AppointmentStates.Completed;
+        this.appointmentSelected.statusReason = 'El turno fue marcado como completado por el especialista.';
+        this._appointmentsService.update(this.appointmentSelected);
+      }
+    });    
   }
 }

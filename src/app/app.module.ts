@@ -31,7 +31,9 @@ import { ReviewAppointmentComponent } from './features/appointments/review-appoi
 import { ViewAppointmentReviewComponent } from './features/appointments/view-appointment-review/view-appointment-review.component';
 import { SpecialitiesListComponent } from './components/specialities-list/specialities-list.component';
 import { SpecialistFilterPipe } from './pipes/specialist-filter.pipe';
-import { PatientsComponent } from './features/patients/patients.component'
+import { PatientsComponent } from './features/patients/patients.component';
+import { NewClinicalRecordFormComponent } from './features/appointments/new-clinical-record-form/new-clinical-record-form.component';
+import { VisualizeClinicalRecordsComponent } from './features/appointments/visualize-clinical-records/visualize-clinical-records.component'
 registerLocaleData(localeES, 'es')
 
 @NgModule({
@@ -58,6 +60,8 @@ registerLocaleData(localeES, 'es')
     SpecialitiesListComponent,
     SpecialistFilterPipe,
     PatientsComponent,
+    NewClinicalRecordFormComponent,
+    VisualizeClinicalRecordsComponent,
   ],
   imports: [
     CoreModule,

@@ -1,9 +1,11 @@
 <div class="px-5 mt-2 font-segoe">
 	<h1 class="text-primary"> <i class="pi pi-calendar" style="font-size: 2rem"></i> Solicitar Turno</h1>
 
+	<div *ngIf="this.specialitySelected.name || this.patientSelected.name" class="flex align-items-center gap-2 border-100 chip w-fit">
+		<span *ngIf="this.specialitySelected.name" class="text-base">Especialidad: {{ this.specialitySelected.name }}</span>
 
-	<div *ngIf="this.specialitySelected.name" class="flex align-items-center gap-2 border-100 chip w-fit">
-		<span class="text-base">Especialidad: {{ this.specialitySelected.name }}</span>
+
+		<span *ngIf="this.patientSelected.name" class="text-base">Paciente: {{ this.patientSelected.name }} {{this.patientSelected.surname}} </span>
 		<p-button (onClick)="onFilterReset()" icon="pi pi-times" styleClass="p-button-rounded p-button-text"></p-button>
 	</div>
 	
@@ -14,8 +16,8 @@
 			<div >
 				<div class="flex gap-8 flex-wrap avatars-deck mt-4">
 					<div *ngFor="let speciality of specialities" (click)="this.onSpecialitySelected(speciality)">
-						<img src="{{ speciality.image }}" class="avatar" alt="">
-						<div *ngIf="speciality.image == ''" class="mt-2 font-medium text-800"> {{ speciality.name }} </div>
+						<img *ngIf="speciality.image != ''" src="{{ speciality.image }}" class="avatar" alt="">
+						<p-button styleClass="p-button-rounded p-button-text" *ngIf="speciality.image == ''" class="mt-2 font-medium text-800"> {{ speciality.name }} </p-button>
 					</div>
 				</div>
 			</div>
@@ -26,11 +28,23 @@
 			<div>
 				<div class="flex gap-8 flex-wrap avatars-deck mt-4">
 					<div *ngFor="let specialist of specialists | specialistFilter : this.specialitySelected.name" (click)="this.onSpecialistSelected(specialist)">
-						<img src="{{ specialist.images[0] }}" class="avatar" alt="">
 						<div class="mt-2 font-medium text-800"> {{ specialist.name }} {{ specialist.surname }} </div>
 						<div *ngFor="let speciality of specialist.speciality">
 							<div class="mt-2 text-600"> {{ speciality }} </div>
 						</div>
+						<img src="{{ specialist.images[0] }}" class="avatar" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="this.activeTab.label == 'Paciente'" class="col">
+			<div class="text-2xl"> Seleccionar paciente: </div>
+			<div>
+				<div class="flex gap-8 flex-wrap avatars-deck mt-4">
+					<div *ngFor="let patient of patients" (click)="this.onPatientSelected(patient)">
+						<div class="mt-2 font-medium text-800"> {{ patient.name }} {{ patient.surname }} </div>
+						<img src="{{ patient.images[0] }}" class="avatar" alt="">
 					</div>
 				</div>
 			</div>

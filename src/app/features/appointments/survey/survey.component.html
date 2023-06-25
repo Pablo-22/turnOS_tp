@@ -2,7 +2,7 @@
 
 <div ngClass="mb-3" *ngIf="this.showErrorMsg" class="text-red-400">Error: Todos los campos son obligatorios</div>
 
-<div class="d-flex flex-column">
+<div class="flex flex-column">
 	<div class="mb-4" *ngFor="let question of survey.questions">
 		<div class="mb-2"><label for="pregunta1"> {{ question.question }} </label></div>
 		<input pInputText [(ngModel)]="question.answer" type="text" id="pregunta1" name="pregunta1" class="w-full" />
