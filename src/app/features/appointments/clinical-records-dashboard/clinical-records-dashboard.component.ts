@@ -4,14 +4,12 @@ import { Appointment } from '../models/appointment';
 import { ClinicalRecords } from '../models/clinical-records';
 import { ClinicalRecordsService } from '../services/clinical-records.service';
 import { Timestamp } from '@angular/fire/firestore';
-import { TimePipe } from 'src/app/pipes/time.pipe';
 
 
 @Component({
   selector: 'app-clinical-records-dashboard',
   templateUrl: './clinical-records-dashboard.component.html',
   styleUrls: ['./clinical-records-dashboard.component.scss'],
-  providers: [ TimePipe ]
 })
 export class ClinicalRecordsDashboardComponent {
 

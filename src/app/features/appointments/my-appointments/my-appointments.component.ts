@@ -17,7 +17,6 @@ import { NewClinicalRecordFormComponent } from '../new-clinical-record-form/new-
 import { ClinicalRecords } from '../models/clinical-records';
 import { ClinicalRecordsService } from '../services/clinical-records.service';
 import { Timestamp } from '@angular/fire/firestore';
-import { TimePipe } from 'src/app/pipes/time.pipe';
 import { AppModule } from 'src/app/app.module';
 
 @Component({
