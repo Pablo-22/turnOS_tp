@@ -30,6 +30,7 @@ import { ToastModule } from 'primeng/toast';
 import { DragDropModule } from 'primeng/dragdrop';
 import { RatingModule } from 'primeng/rating';
 import { TagModule } from 'primeng/tag';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { TagModule } from 'primeng/tag';
 	DragDropModule,
 	RatingModule,
 	TagModule,
+	MultiSelectModule
   ]
 })
 export class PrimeNgModule { }

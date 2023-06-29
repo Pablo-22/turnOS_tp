@@ -62,8 +62,6 @@ export class RequestAppointmentComponent implements OnInit {
       this._loaderService.hide()
       this.specialists.forEach(x => {
         this._availabilityService.getByField('specialistId', x.id).then(availability => {
-          console.log(x, x.id)
-          console.log(availability)
           x.availability = availability[0]
         })
       })
@@ -111,7 +109,6 @@ export class RequestAppointmentComponent implements OnInit {
     this.clearSelectedData()
 
     if (this.specialistSelected && this.specialitySelected) {
-      console.log(this.specialistSelected)
       this.appointmentsAvailable = SpecialistAvailability.getAvailableAppointmentsBySpeciality(this.specialistSelected.availability, this.specialitySelected.name, 15)
 
       this._appointmentsService.getByField('specialistId', this.specialistSelected.id).then(x => {
@@ -141,7 +138,14 @@ export class RequestAppointmentComponent implements OnInit {
         icon: 'success',
         confirmButtonText: 'Ok'
       }).then(x => {
-        this._router.navigate(['/my-appointments'])
+        this._router.navigate(['/appointments/my-appointments'])
+      })
+    } else {
+      Swal.fire({
+        title: 'Atención',
+        text: 'No se han seleccionado todos los datos necesarios para solicitar el turno.',
+        icon: 'error',
+        confirmButtonText: 'Ok'
       })
     }
   }

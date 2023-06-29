@@ -1,4 +1,4 @@
-<div class="flex flex-row justify-content-center font-segoe gap-4">
+<div class="flex flex-row justify-content-center font-segoe gap-4 slide-in-bottom">
     <div class="custom-card p-5 user-panel">
 		<div class="flex flex-row align-items-center gap-3">
 			<div class="flex flex-column">
@@ -79,6 +79,16 @@
             <li class="mt-4" *ngIf="['PATIENT'].includes(this.currentUser?.type ?? '')">
                 <button (click)="this.viewClinicalRecords()" pButton pRipple label="Ver historia clínica" icon="pi pi-book" class="p-button-primary"></button>
             </li>
+
+            <div *ngIf="['PATIENT'].includes(this.currentUser?.type ?? '')" class="flex align-items-center mt-4 gap-3">
+                <div >
+                    <p-multiSelect (onChange)="this.refreshSpecialities()" [style]="{'width':'30rem'}" [options]="itemsAsSelectItems" [(ngModel)]="selectedSpecialities" defaultLabel="Especialidad" display="chip" [filter]="true"></p-multiSelect>
+                </div>
+
+                <li>
+                    <button (click)="this.downloadClinicalRecords()" pButton pRipple label="Descargar historia clínica" icon="pi pi-download" class="p-button-primary"></button>
+                </li>
+            </div>
         </ul>
     </div>
 
@@ -87,3 +97,7 @@
 	</div>
 </div>
 
+<div style="display: none;" #pdfContent >
+    <app-clinical-records-dashboard [appointments]="this.filteredAppointments">
+    </app-clinical-records-dashboard>
+</div>

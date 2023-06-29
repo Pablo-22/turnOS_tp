@@ -1,0 +1,77 @@
+<div style="padding: 1rem; width: 40rem;font-size: 5px;">
+	<div>Fecha de emisión: {{ getDate() | date: 'dd-MM-yyyy hh:mm a' }}</div>
+	<h2 style="margin-top: 1rem; margin-bottom: .3rem;">Historia Clínica</h2> 
+	<img src="../../../../assets/logo.png" width="50px" alt="">
+	<div *ngFor="let currentAppointment of this.appointments">
+		<div *ngIf="this.appointments.length > 0; else noAppointments">
+			<div style="margin-bottom: .5rem;">
+				<div>Turno</div>
+				<div>
+					<span>Especialidad: </span>
+					<span style="font-weight: 500; margin-left: 0.5rem;">{{currentAppointment.speciality}}</span>
+				</div>
+				<div *ngIf="currentAppointment.specialist?.name">
+					<span>Especialista: </span>
+					<span style="font-weight: 500; margin-left: 0.5rem;">
+						{{currentAppointment.specialist?.name}}
+						{{currentAppointment.specialist?.surname}}
+					</span>
+				</div>
+				<span style="color: green; ">
+					{{ currentAppointment.date | timestampToStrDate }}
+				</span>
+		
+				<span style="font-weight: 500; margin-left: 0.5rem;">
+					{{ currentAppointment.timeRange.from | time }} -
+					{{ currentAppointment.timeRange.to | time }}
+				</span>
+			</div>
+			<div *ngIf="currentAppointment.clinicalRecords?.id; else noRecords" style="display: flex; flex-direction: column;">
+				<div style="display: flex; flex-direction: row; gap: 0.3125rem; flex-wrap: wrap; margin-bottom: .5rem;">
+					<div>
+						<div style="margin-bottom: 0.5rem; color: blue; "><label>Altura</label></div>
+						<div style="display: flex; flex-direction: row;">
+							{{ currentAppointment.clinicalRecords?.height?.value }} {{ currentAppointment.clinicalRecords?.height?.unit }}
+						</div>
+					</div>
+					<div>
+						<div style="margin-bottom: 0.5rem; color: blue; "><label>Peso</label></div>
+						<div>
+							{{ currentAppointment.clinicalRecords?.weight?.value }} {{ currentAppointment.clinicalRecords?.weight?.unit }}
+						</div>
+					</div>
+					<div>
+						<div style="margin-bottom: 0.5rem; color: blue; "><label>Presión</label></div>
+						<div style="display: flex; flex-direction: row;">
+							{{ currentAppointment.clinicalRecords?.pressure?.value }} {{ currentAppointment.clinicalRecords?.pressure?.unit }}
+						</div>
+					</div>
+					<div>
+						<div style="margin-bottom: 0.5rem; color: blue; "><label>Temperatura</label></div>
+						<div>
+							{{ currentAppointment.clinicalRecords?.temperature?.value }} {{ currentAppointment.clinicalRecords?.temperature?.unit }}
+						</div>
+					</div>
+				</div>
+				<h2 style="margin-top: .5rem; margin-bottom: .5rem;">Datos personalizados</h2>
+				<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 0.9375rem;">
+					<div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 1rem; width: fit-content;" *ngFor="let measurement of currentAppointment.clinicalRecords?.dynamicMeasurements; index as i">
+						<div>
+							<div style="color: blue;  margin-bottom: 0.5rem;">{{ measurement.name }}</div>
+							{{ measurement.value }}
+							{{ measurement.unit }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<ng-template #noRecords>
+				<div style="margin-top: 0.1rem; margin-bottom: 1rem;">
+					No se cargaron datos en este turno.
+				</div>
+			</ng-template>
+		</div>
+		<ng-template #noAppointments>
+			<h1 style="margin-top: .5rem;">Este paciente no ha tomado ningún turno</h1>
+		</ng-template>
+	</div>
+</div>

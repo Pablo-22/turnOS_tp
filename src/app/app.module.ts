@@ -20,20 +20,14 @@ import { MyProfileComponent } from './features/my-profile/my-profile.component';
 import { SpecialistAvailabilityComponent } from './features/appointments/specialist-availability/specialist-availability.component';
 import { DayPipe } from './pipes/day.pipe';
 import { TimePipe } from './pipes/time.pipe';
-import { RequestAppointmentComponent } from './features/appointments/request-appointment/request-appointment.component';
 
 import localeES from '@angular/common/locales/es'
 import { registerLocaleData } from '@angular/common';
-import { MyAppointmentsComponent } from './features/appointments/my-appointments/my-appointments.component';
-import { AppointmentsFilterPipe } from './pipes/appointments-filter.pipe';
-import { SurveyComponent } from './features/appointments/survey/survey.component';
-import { ReviewAppointmentComponent } from './features/appointments/review-appointment/review-appointment.component';
 import { ViewAppointmentReviewComponent } from './features/appointments/view-appointment-review/view-appointment-review.component';
 import { SpecialitiesListComponent } from './components/specialities-list/specialities-list.component';
 import { SpecialistFilterPipe } from './pipes/specialist-filter.pipe';
-import { PatientsComponent } from './features/patients/patients.component';
-import { NewClinicalRecordFormComponent } from './features/appointments/new-clinical-record-form/new-clinical-record-form.component';
-import { VisualizeClinicalRecordsComponent } from './features/appointments/visualize-clinical-records/visualize-clinical-records.component'
+import { VisualizeClinicalRecordsComponent } from './features/appointments/visualize-clinical-records/visualize-clinical-records.component';
+import { ClinicalRecordsDashboardComponent } from './features/appointments/clinical-records-dashboard/clinical-records-dashboard.component'
 registerLocaleData(localeES, 'es')
 
 @NgModule({
@@ -42,26 +36,16 @@ registerLocaleData(localeES, 'es')
     HomeComponent,
     LoginComponent,
     NavbarComponent,
-    UsersDeckComponent,
     SigninComponent,
+    UsersDeckComponent,
     NewUserFormComponent,
     UserTypePipe,
-    UsersManagerComponent,
+    SpecialitiesListComponent,
     MyProfileComponent,
     SpecialistAvailabilityComponent,
     DayPipe,
     TimePipe,
-    RequestAppointmentComponent,
-    MyAppointmentsComponent,
-    AppointmentsFilterPipe,
-    SurveyComponent,
-    ReviewAppointmentComponent,
-    ViewAppointmentReviewComponent,
-    SpecialitiesListComponent,
-    SpecialistFilterPipe,
-    PatientsComponent,
-    NewClinicalRecordFormComponent,
-    VisualizeClinicalRecordsComponent,
+    ClinicalRecordsDashboardComponent,
   ],
   imports: [
     CoreModule,
@@ -72,6 +56,11 @@ registerLocaleData(localeES, 'es')
     FormsModule,
 		ReactiveFormsModule,
     HttpClientModule
+  ],
+  exports: [
+    TimePipe,
+    UserTypePipe,
+    NewUserFormComponent,
   ],
   providers: [{provide: LOCALE_ID, useValue: 'es'}],
   bootstrap: [AppComponent]

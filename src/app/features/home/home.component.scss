@@ -1,0 +1,27 @@
+/**
+ * ----------------------------------------
+ * animation fade-in
+ * ----------------------------------------
+ */
+ @-webkit-keyframes fade-in {
+	0% {
+	  opacity: 0;
+	}
+	100% {
+	  opacity: 1;
+	}
+  }
+  @keyframes fade-in {
+	0% {
+	  opacity: 0;
+	}
+	100% {
+	  opacity: 1;
+	}
+  }
+  
+
+.fade-in {
+	-webkit-animation: fade-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) 0.1s both;
+	        animation: fade-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) 0.1s both;
+}

@@ -1,8 +1,11 @@
 <div style="width: 40rem;">
 	<h2>Historia Clínica</h2>
+
+	<h3 *ngIf="appointment.patient?.name" >{{ appointment.patient?.name }} {{ appointment.patient?.surname }}</h3>
 	
 	<div class="mb-4">
-		<div>Turno</div>
+		<div class="font-bold">Turno</div>
+		<div>Especialidad: {{ appointment.speciality }}</div>
 		<span class="text-green-500 font-medium">
 			{{ appointment.date | timestampToStrDate }}
 		</span>
@@ -67,7 +70,7 @@
 					<input pInputText [(ngModel)]="measurement.name" type="text" />
 					<div class="mt-3 mb-2"><label> Valor </label></div>
 					<input pInputText [(ngModel)]="measurement.value" type="text" />
-					<div class="mt-3 mb-2"><label> Unidad de medida </label></div>
+					<div class="mt-3 mb-2"><label> Unidad de medida (opcional) </label></div>
 					<input pInputText [(ngModel)]="measurement.unit" type="text" />
 				</div>
 

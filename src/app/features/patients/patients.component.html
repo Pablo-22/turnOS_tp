@@ -9,7 +9,7 @@
 	<div class="text-4xl font-segoe"> Pacientes: </div>
 
 	<div class="mt-5 flex flex-row gap-4 flex-wrap">
-		<p-card *ngFor="let patient of patients" (click)="this.onPatientSelected(patient)" 
+		<p-card *ngFor="let patient of patients" 
 		header="{{ patient.name }} {{ patient.surname }}" [style]="{ width: '300px' }"
 		>
 			Últimos turnos:
@@ -23,6 +23,10 @@
 					{{ appointment.timeRange.from | time }} -
 					{{ appointment.timeRange.to | time }}
 				</span>
+			</div>
+
+			<div class="flex flex-column gap-2 mt-4">
+				<button (click)="onPatientSelected(patient)"  pButton pRipple label="Ver historia" icon="pi pi-book" class="p-button-outlined"></button>
 			</div>
 		</p-card>
 	</div>

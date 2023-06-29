@@ -16,12 +16,15 @@ import { ViewAppointmentReviewComponent } from '../view-appointment-review/view-
 import { NewClinicalRecordFormComponent } from '../new-clinical-record-form/new-clinical-record-form.component';
 import { ClinicalRecords } from '../models/clinical-records';
 import { ClinicalRecordsService } from '../services/clinical-records.service';
+import { Timestamp } from '@angular/fire/firestore';
+import { TimePipe } from 'src/app/pipes/time.pipe';
+import { AppModule } from 'src/app/app.module';
 
 @Component({
   selector: 'app-my-appointments',
   templateUrl: './my-appointments.component.html',
   styleUrls: ['./my-appointments.component.scss'],
-  providers: [MessageService, DialogService]
+  providers: [MessageService, DialogService, AppModule]
 })
 export class MyAppointmentsComponent implements OnInit {
   appointments: Appointment[] | undefined;
@@ -58,6 +61,11 @@ export class MyAppointmentsComponent implements OnInit {
           this.appointments = x;
           this._loaderService.hide();
 
+          this.appointments.sort((a, b) => { 
+            return  (Object.assign(new Timestamp(0, 0), b.date).toMillis() + b.timeRange.from.hours) 
+                    - ( Object.assign(new Timestamp(0, 0), a.date).toMillis() + a.timeRange.from.hours)
+          })
+
           this.appointments.forEach((appointment) => {
             this._usersService
               .getById(appointment.specialistId)
@@ -78,6 +86,11 @@ export class MyAppointmentsComponent implements OnInit {
           this.appointments = x;
           this._loaderService.hide();
 
+          this.appointments.sort((a, b) => { 
+            return  (Object.assign(new Timestamp(0, 0), b.date).toMillis() + b.timeRange.from.hours) 
+                    - ( Object.assign(new Timestamp(0, 0), a.date).toMillis() + a.timeRange.from.hours)
+          })
+
           this.appointments.forEach((appointment) => {
             this._usersService
               .getById(appointment.patientId)
@@ -94,6 +107,11 @@ export class MyAppointmentsComponent implements OnInit {
         this._appointmentsService.getAll().subscribe(x => {
           this.appointments = x;
           this._loaderService.hide();
+
+          this.appointments.sort((a, b) => { 
+            return  (Object.assign(new Timestamp(0, 0), b.date).toMillis() + b.timeRange.from.hours) 
+                    - ( Object.assign(new Timestamp(0, 0), a.date).toMillis() + a.timeRange.from.hours)
+          })
 
           this.appointments.forEach((appointment) => {
             this._usersService
@@ -231,7 +249,17 @@ export class MyAppointmentsComponent implements OnInit {
             },
           }
         )
-      }
+      } else if ([AppointmentStates.Completed].includes(appointment.status) && !appointment.clinicalRecords?.id) {
+        this.items.push(
+          {
+            label: 'Cargar historia clínica',
+            icon: 'pi pi-check-square',
+            command: () => {
+              this.finishAppointment();
+            },
+          }
+        )
+      } 
 
       if (appointment.review) {
         this.items.push(
@@ -344,7 +372,8 @@ export class MyAppointmentsComponent implements OnInit {
     });
 
     this.dialog.onClose.subscribe((result:ClinicalRecords) => {
-      if (result.id) {
+      this.appointmentSelected.clinicalRecords = result
+      if (result.id && this.appointmentSelected.status != AppointmentStates.Completed) {
         this.appointmentSelected.status = AppointmentStates.Completed;
         this.appointmentSelected.statusReason = 'El turno fue marcado como completado por el especialista.';
         this._appointmentsService.update(this.appointmentSelected);

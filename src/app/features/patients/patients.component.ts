@@ -88,20 +88,12 @@ export class PatientsComponent {
   onPatientSelected(patient:Patient){
     this.patientSelected = patient
     this.appointmentsFiltered = this.appointments.filter(x => { return x.patientId == this.patientSelected?.id })
-    console.log(this.patients)
-    console.log(this.getLastAppointments(this.patientSelected.appointments ?? []))
 
     this.dialog = this.dialogService.open(VisualizeClinicalRecordsComponent, {
       header: 'Historia clínica',
       contentStyle: { overflow: 'auto' },
       data: this.patientSelected.appointments?? []
     });
-
-    /*
-    this.dialog.onClose.subscribe((appointment:Appointment) => {
-      this._appointmentsService.update(appointment)
-    });
-    */
   }
 
   onFilterReset(){
@@ -109,9 +101,9 @@ export class PatientsComponent {
   }
 
   getLastAppointments(appointments:Appointment[]){
-    appointments.sort((a, b) => { 
-      return  (Object.assign(new Timestamp(0, 0), a.date).toMillis() + a.timeRange.from.hours + a.timeRange.from.minutes ) 
-              - ( Object.assign(new Timestamp(0, 0), b.date).toMillis() + b.timeRange.from.hours + b.timeRange.from.minutes )
+    appointments.sort((b, a) => { 
+      return  (Object.assign(new Timestamp(0, 0), a.date).toMillis() + a.timeRange.from.hours) 
+              - ( Object.assign(new Timestamp(0, 0), b.date).toMillis() + b.timeRange.from.hours)
     })
     return appointments.slice(0, 3)
   }

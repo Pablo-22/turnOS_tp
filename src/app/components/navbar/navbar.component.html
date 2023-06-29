@@ -7,13 +7,13 @@
 			
 			<button *ngIf="!this.UserLogged" [routerLink]="'/signin'" pButton pRipple class="p-button-text p-button-plain nav-item"> Registrarme </button>
 
-			<button *ngIf="['PATIENT', 'SPECIALIST'].includes(this.currentUser?.type ?? '')" [routerLink]="'/my-appointments'" pButton pRipple class="p-button-text p-button-plain nav-item"> Mis turnos </button>
+			<button *ngIf="['PATIENT', 'SPECIALIST'].includes(this.currentUser?.type ?? '')" [routerLink]="'/appointments/my-appointments'" pButton pRipple class="p-button-text p-button-plain nav-item"> Mis turnos </button>
 
-			<button *ngIf="['SPECIALIST'].includes(this.currentUser?.type ?? '')" [routerLink]="'/patients'" pButton pRipple class="p-button-text p-button-plain nav-item"> Pacientes </button>
+			<button *ngIf="['SPECIALIST'].includes(this.currentUser?.type ?? '')" [routerLink]="'/appointments/patients'" pButton pRipple class="p-button-text p-button-plain nav-item"> Pacientes </button>
 
-			<button *ngIf="['ADMIN'].includes(this.currentUser?.type ?? '')" [routerLink]="'/my-appointments'" pButton pRipple class="p-button-text p-button-plain nav-item"> Turnos </button>
+			<button *ngIf="['ADMIN'].includes(this.currentUser?.type ?? '')" [routerLink]="'/appointments/my-appointments'" pButton pRipple class="p-button-text p-button-plain nav-item"> Turnos </button>
 
-			<button *ngIf="['PATIENT','ADMIN'].includes(this.currentUser?.type ?? '')" [routerLink]="'/request-appointment'" pButton pRipple class="p-button-text p-button-plain nav-item"> Solicitar turno </button>
+			<button *ngIf="['PATIENT','ADMIN'].includes(this.currentUser?.type ?? '')" [routerLink]="'/appointments/request-appointment'" pButton pRipple class="p-button-text p-button-plain nav-item"> Solicitar turno </button>
 
 			<button *ngIf="['ADMIN'].includes(this.currentUser?.type ?? '')" [routerLink]="'/users-manager'" pButton pRipple class="p-button-text p-button-plain nav-item"> Usuarios </button>
 

@@ -3,6 +3,8 @@
 
 	<p-tabView>
 		<p-tabPanel header="Usuarios">
+			<button (click)="downloadUsersExcel()"  pButton pRipple label="Descargar información usuarios" icon="pi pi-download" class="p-button-outlined my-4"></button>
+
 			<div class="grid">
 				<p-card *ngFor="let user of users" class="col-12 md:col-6 lg:col-3 xl:col-2" header="{{ user.name }} {{ user.surname }}">
 		
@@ -19,11 +21,25 @@
 							<p-inputSwitch (onChange)="updateUserStatus(user)" class="ml-4" [(ngModel)]="user.approvedProfile"></p-inputSwitch>
 						</div>
 					</ng-template>
+
+					<div *ngIf="user.type == 'PATIENT'" class="flex flex-column gap-2 mt-4">
+						<button (click)="viewClinicalRecords(user)"  pButton pRipple label="Ver historia" icon="pi pi-book" class="p-button-outlined"></button>
+					</div>
 				</p-card>
 			</div>
 		</p-tabPanel>
+
 		<p-tabPanel header="Añadir usuario">
 			<app-new-user-form userType="ADMIN"></app-new-user-form>
+		</p-tabPanel>
+
+		<p-tabPanel header="Descargar historia clínica">
+			<div class="flex gap-8 flex-wrap avatars-deck mt-4">
+				<div *ngFor="let user of patients" (click)="onDownloadRecords(user)">
+					<img src="{{ user.images[0] }}" class="avatar" alt="">
+					<div class="mt-2 font-medium text-800"> {{ user.name }} {{ user.surname }} </div>
+				</div>
+			</div>
 		</p-tabPanel>
 	</p-tabView>
 </div>

@@ -55,6 +55,7 @@ export class UsersService {
       specialist.password = data['password']
       specialist.name = data['name']
       specialist.surname = data['surname']
+      specialist.dni = data['dni']
       specialist.birthDate = data['birthDate']
       specialist.type = data['type']
       specialist.approvedProfile = data['approvedProfile']
@@ -71,10 +72,12 @@ export class UsersService {
       patient.name = data['name']
       patient.surname = data['surname']
       patient.birthDate = data['birthDate']
+      patient.dni = data['dni']
       patient.type = data['type']
       patient.approvedProfile = data['approvedProfile']
       patient.images = data['images'] 
       patient.healthInsurance = data['healthInsurance']
+      patient.appointments = data['appointments']
       return patient
     }
     
@@ -84,6 +87,7 @@ export class UsersService {
     user.password = data['password']
     user.name = data['name']
     user.surname = data['surname']
+    user.dni = data['dni']
     user.birthDate = data['birthDate']
     user.type = data['type']
     user.approvedProfile = data['approvedProfile']

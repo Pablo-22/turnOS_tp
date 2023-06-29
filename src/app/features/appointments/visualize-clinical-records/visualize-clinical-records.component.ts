@@ -3,6 +3,7 @@ import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { Appointment } from '../models/appointment';
 import { ClinicalRecords, Measurement } from '../models/clinical-records';
 import { ClinicalRecordsService } from '../services/clinical-records.service';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-visualize-clinical-records',
@@ -29,17 +30,21 @@ export class VisualizeClinicalRecordsComponent {
 		this.appointments = this.config.data
     this.totalElements = this.appointments.length
 
+    this.appointments.sort((b, a) => { 
+      return  (Object.assign(new Timestamp(0, 0), a.date).toMillis() + a.timeRange.from.hours) 
+              - ( Object.assign(new Timestamp(0, 0), b.date).toMillis() + b.timeRange.from.hours)
+    })
+
     this.appointments.forEach(app => {
       this._clinicalRecordsService.getByField('appointmentId', app.id).then(x => {
         this.clinicalRecords.push(...x)
-        console.log(this.clinicalRecords)
         this.getElement()
       })
     })    
 	}
 
   onNext(){
-    if (this.index == this.totalElements) {
+    if (this.index == this.totalElements - 1) {
       return
     }
 

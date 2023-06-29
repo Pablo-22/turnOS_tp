@@ -56,8 +56,10 @@
 				<h2>Turnos disponibles:</h2>
 
 				<div class="flex gap-4 flex-wrap mt-3 h-15rem overflow-auto">
-					<div (click)="this.onAppointmentSelected(appointment)" *ngFor="let appointment of this.appointmentsAvailable" class="mb-2 border-1 border-500 px-3 py-1 border-round-md 
-						hover:border-900 hover:border-2 cursor-pointer">
+					<div (click)="this.onAppointmentSelected(appointment)" *ngFor="let appointment of this.appointmentsAvailable" 	
+						class="mb-2 border-1 border-500 px-3 py-1 border-round-md 
+						hover:border-900 hover:border-2 cursor-pointer"
+					>
 						 {{ appointment.date | timestampToStrDate}}
 						<span class="text-500"> 
 							<br>
