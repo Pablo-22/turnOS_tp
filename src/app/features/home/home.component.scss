@@ -25,3 +25,41 @@
 	-webkit-animation: fade-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) 0.1s both;
 	        animation: fade-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) 0.1s both;
 }
+
+
+.fade-in-bottom {
+	-webkit-animation: fade-in-bottom 0.9s cubic-bezier(0.550, 0.085, 0.680, 0.530) 0.1s both;
+	        animation: fade-in-bottom 0.9s cubic-bezier(0.550, 0.085, 0.680, 0.530) 0.1s both;
+}
+
+
+/**
+ * ----------------------------------------
+ * animation fade-in-bottom
+ * ----------------------------------------
+ */
+ @-webkit-keyframes fade-in-bottom {
+	0% {
+	  -webkit-transform: translateY(50px);
+			  transform: translateY(50px);
+	  opacity: 0;
+	}
+	100% {
+	  -webkit-transform: translateY(0);
+			  transform: translateY(0);
+	  opacity: 1;
+	}
+  }
+  @keyframes fade-in-bottom {
+	0% {
+	  -webkit-transform: translateY(50px);
+			  transform: translateY(50px);
+	  opacity: 0;
+	}
+	100% {
+	  -webkit-transform: translateY(0);
+			  transform: translateY(0);
+	  opacity: 1;
+	}
+  }
+  
