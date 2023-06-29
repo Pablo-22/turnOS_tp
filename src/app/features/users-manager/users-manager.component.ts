@@ -101,6 +101,7 @@ export class UsersManagerComponent {
 			let row = {
 				Nombre: user.name,
 				Apellido: user.surname,
+				Perfil: user.type,
 				DNI: user.dni,
 				Imagenes: user.images.join("\n"),
 				Nacimiento: TimestampUtils.getDateByTimestamp(user.birthDate).toString(),

@@ -14,6 +14,7 @@ import { UsersService } from 'src/app/core/models/users/users.service';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Appointment } from '../appointments/models/appointment';
+import { TimestampUtils } from 'src/app/core/utils/timestamp-utils';
 
 
 @Component({
@@ -52,7 +53,6 @@ export class MyProfileComponent {
 	ngOnInit(): void {
 		this._auth.currentUser$.subscribe(x => {
 			this.currentUser = x as User;
-			
 
 			if (x?.type == 'PATIENT') {
 				
@@ -93,8 +93,9 @@ export class MyProfileComponent {
 	}
 
 	formatTimestampToDate(timestamp:Timestamp|undefined){
-		if (timestamp && timestamp.constructor.name == 'Timestamp') {
-			return timestamp.toDate();
+		let objTimestamp = Object.assign(new Timestamp(0, 0), timestamp)
+		if (objTimestamp) {
+			return TimestampUtils.getDateByTimestamp(objTimestamp);
 		}
 		return '';
 	}
