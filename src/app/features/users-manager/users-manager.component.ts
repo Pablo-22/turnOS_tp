@@ -82,7 +82,9 @@ export class UsersManagerComponent {
 				HoraDesde: AppointmentUtils.parseTime(appointment.timeRange.from),
 				HoraHasta: AppointmentUtils.parseTime(appointment.timeRange.to),
 				Especialista: appointment.specialist?.name + " " + appointment.specialist?.surname,
-				Especialidad: appointment.speciality
+				Especialidad: appointment.speciality,
+				Status: AppointmentUtils.getAppointmentStateText(appointment.status),
+				RazonStatus: appointment.statusReason
 			};
 
 			excelDataSource.push(row);

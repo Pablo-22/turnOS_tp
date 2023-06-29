@@ -33,7 +33,7 @@
 			<app-new-user-form userType="ADMIN"></app-new-user-form>
 		</p-tabPanel>
 
-		<p-tabPanel header="Descargar historia clínica">
+		<p-tabPanel header="Descargar historial de turnos">
 			<div class="flex gap-8 flex-wrap avatars-deck mt-4">
 				<div *ngFor="let user of patients" (click)="onDownloadRecords(user)">
 					<img src="{{ user.images[0] }}" class="avatar" alt="">
